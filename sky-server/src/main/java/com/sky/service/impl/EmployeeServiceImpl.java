@@ -121,12 +121,48 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(total, records);
     }
 
+    /**
+     * 启用禁用员工账号
+     *
+     * @param status
+     * @param id
+     */
     public void StartOrStop(Integer status, Long id) {
         //封装成Employee对象
-        Employee  employee = Employee.builder()
+        Employee employee = Employee.builder()
                 .status(status)
                 .id(id)
                 .build();
         employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据id查找员工
+     *
+     * @param id
+     */
+    public Employee SelectById(Long id) {
+        Employee employee = employeeMapper.SelectById(id);
+        return employee;
+    }
+
+    /**
+     * 修改员工信息
+     *
+     * @param employeeDTO
+     * @return
+     */
+    public void UpdateEmp(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+
+        //先进行拷贝
+        BeanUtils.copyProperties(employeeDTO, employee);
+
+        //更新修改时间和修改人id
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        //更新
+        employeeMapper.update(employee);
+
     }
 }
