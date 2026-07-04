@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
         //进行数据拷贝
         BeanUtils.copyProperties(categoryDTO, category);
         //设置状态,默认为0
-        category.setStatus(StatusConstant.DISABLE);
+        category.setStatus(StatusConstant.ENABLE);
         //设置创建时间和修改时间
         category.setCreateTime(LocalDateTime.now());
         category.setUpdateTime(LocalDateTime.now());
@@ -62,4 +62,17 @@ public class CategoryServiceImpl implements CategoryService {
 
         return new PageResult(total,result);
     }
+
+    public void update(CategoryDTO categoryDTO){
+        Category category =new Category();
+        //先进行拷贝
+         BeanUtils.copyProperties(categoryDTO,category);
+
+        //更新修改时间和修改人id
+        category.setUpdateTime(LocalDateTime.now());
+        category.setUpdateUser(BaseContext.getCurrentId());
+        //更新
+        categoryMapper.update(category);
+    }
+
 }

@@ -24,4 +24,6 @@ public interface CategoryMapper {
      * @return
      */
     Page<Category> Page(CategoryPageQueryDTO categoryPageQueryDTO);
+
+    void update(Category category);
 }

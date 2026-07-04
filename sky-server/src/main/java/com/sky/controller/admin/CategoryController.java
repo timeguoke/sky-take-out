@@ -2,6 +2,7 @@ package com.sky.controller.admin;
 
 import com.sky.dto.CategoryDTO;
 import com.sky.dto.CategoryPageQueryDTO;
+import com.sky.entity.Category;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.CategoryService;
@@ -42,8 +43,22 @@ public class CategoryController {
     @ApiOperation("分页查询")
     public Result<PageResult> Page(CategoryPageQueryDTO categoryPageQueryDTO) {
         log.info("分页查询:{}", categoryPageQueryDTO);
-        PageResult  pageResult = categoryService.Page(categoryPageQueryDTO);
-        return  Result.success(pageResult);
+        PageResult pageResult = categoryService.Page(categoryPageQueryDTO);
+        return Result.success(pageResult);
+    }
+
+    /**
+     * 修改分类信息
+     *
+     * @param categoryDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("修改分类信息")
+    public Result update(@RequestBody CategoryDTO categoryDTO) {
+        log.info("修改分类信息:{}", categoryDTO);
+        categoryService.update(categoryDTO);
+        return Result.success();
     }
 
 }
