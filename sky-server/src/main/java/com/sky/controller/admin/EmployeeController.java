@@ -1,6 +1,10 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.constant.PasswordConstant;
+import com.sky.constant.StatusConstant;
+import com.sky.context.BaseContext;
+import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
@@ -11,12 +15,14 @@ import com.sky.vo.EmployeeLoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -75,5 +81,25 @@ public class EmployeeController {
     public Result<String> logout() {
         return Result.success();
     }
+
+    /**
+     *
+     * 新增员工
+     *
+     * @param employeeDTO
+     * @return
+     */
+    @PostMapping
+    @ApiOperation(value = "添加员工")
+    public Result save(@RequestBody EmployeeDTO employeeDTO) {
+        //记录日志
+        log.info("添加员工...");
+        //展示线程
+        System.out.println("当前线程id " + Thread.currentThread().getId());
+        //调用Service层
+        employeeService.save(employeeDTO);
+        return Result.success();
+    }
+
 
 }
