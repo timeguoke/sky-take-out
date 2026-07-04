@@ -105,19 +105,28 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * 员工分页查询
+     *
      * @param employeePageQueryDTO
      * @return
      */
     public PageResult PageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         //使用插件PageHelper进行分页
-        PageHelper.startPage(employeePageQueryDTO.getPage(),employeePageQueryDTO.getPageSize());
+        PageHelper.startPage(employeePageQueryDTO.getPage(), employeePageQueryDTO.getPageSize());
         //Page里面有PageResult的两个分页属性
-        Page<Employee>  page = employeeMapper.PageQuery(employeePageQueryDTO);
+        Page<Employee> page = employeeMapper.PageQuery(employeePageQueryDTO);
 
         long total = page.getTotal();
         List<Employee> records = page.getResult();
 
-        return new PageResult(total,records);
+        return new PageResult(total, records);
     }
 
+    public void StartOrStop(Integer status, Long id) {
+        //封装成Employee对象
+        Employee  employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+        employeeMapper.update(employee);
+    }
 }

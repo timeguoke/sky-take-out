@@ -92,7 +92,7 @@ public class EmployeeController {
     @ApiOperation(value = "添加员工")
     public Result save(@RequestBody EmployeeDTO employeeDTO) {
         //记录日志
-        log.info("添加员工...");
+        log.info("添加员工...{}", employeeDTO);
         //展示线程
         System.out.println("当前线程id " + Thread.currentThread().getId());
         //调用Service层
@@ -102,14 +102,30 @@ public class EmployeeController {
 
     /**
      * 员工查询分页
+     *
      * @return
      */
     @GetMapping("/page")
     @ApiOperation(value = "员工查询分页")
     public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO) {
-        log.info("员工分页查询...");
-        PageResult pageResult =  employeeService.PageQuery(employeePageQueryDTO);
-        return  Result.success(pageResult);
+        log.info("员工分页查询...{}", employeePageQueryDTO);
+        PageResult pageResult = employeeService.PageQuery(employeePageQueryDTO);
+        return Result.success(pageResult);
+    }
+
+    /**
+     * 启用禁用员工账号
+     *
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation(value = "启用禁用员工账号")
+    public Result StartOrStop(@PathVariable Integer status, Long id) {
+        log.info("启用禁用员工账号:{},{}", status, id);
+        employeeService.StartOrStop(status, id);
+        return Result.success();
     }
 
 }
