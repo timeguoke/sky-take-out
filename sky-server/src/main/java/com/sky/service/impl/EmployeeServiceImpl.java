@@ -17,10 +17,12 @@ import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.EmployeeService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
@@ -71,6 +73,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
+     * 退出
+     *
+     * @return
+     */
+    @PostMapping("/logout")
+    @ApiOperation(value = "员工退出")
+    public Result<String> logout() {
+        return Result.success();
+    }
+
+    /**
      * 添加员工
      *
      * @param employeeDTO
@@ -90,15 +103,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         //设置默认密码,默认密码123456
         employee.setPassword(PasswordConstant.DEFAULT_PASSWORD);
 
-        //设置当前记录的创建时间和修改时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-        //TODO后期会修改为登录人的id
-        //设置当前创建人和修改人的id
-        //取出之前存放在存放在Thread存储空间的id值
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        //设置当前记录的创建时间和修改时间
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//
+//        //TODO后期会修改为登录人的id
+//        //设置当前创建人和修改人的id
+//        //取出之前存放在存放在Thread存储空间的id值
+//        employee.setCreateUser(BaseContext.getCurrentId());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.save(employee);
     }
@@ -158,9 +171,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         //先进行拷贝
         BeanUtils.copyProperties(employeeDTO, employee);
 
-        //更新修改时间和修改人id
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        //更新修改时间和修改人id
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
         //更新
         employeeMapper.update(employee);
 
