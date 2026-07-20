@@ -9,6 +9,8 @@ import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface DishMapper {
 
@@ -33,6 +35,18 @@ public interface DishMapper {
      * @param dishPageQueryDTO
      * @return
      */
-
     Page<DishVO> page(DishPageQueryDTO dishPageQueryDTO);
+
+    /**
+     * 根据id查找菜品
+     * @param id
+     */
+    @Select("select * from dish where id =#{id}")
+    Dish SelectById(Long id);
+
+    /**
+     * 批量删除菜品
+     * @param ids
+     */
+    void DeleteByIds(List<Long> ids);
 }

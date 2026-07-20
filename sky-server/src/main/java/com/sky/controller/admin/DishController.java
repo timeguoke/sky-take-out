@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin/dish")
 @Slf4j
@@ -37,17 +39,33 @@ public class DishController {
 
     /**
      * 菜品分页操作
+     *
      * @param dishPageQueryDTO
      * @return
      */
     @GetMapping("/page")
     @ApiOperation("菜品分页")
     public Result<PageResult> Page(DishPageQueryDTO dishPageQueryDTO) {
-        log.info("菜品分页:{}",dishPageQueryDTO);
-        PageResult pageResult= dishService.page(dishPageQueryDTO);
+        log.info("菜品分页:{}", dishPageQueryDTO);
+        PageResult pageResult = dishService.page(dishPageQueryDTO);
 
-        return  Result.success(pageResult);
+        return Result.success(pageResult);
 
+    }
+
+    /**
+     *
+     * 菜品的批量删除
+     *
+     * @param ids
+     * @return
+     */
+    @DeleteMapping
+    @ApiOperation("菜品的批量删除")
+    public Result DeleteByIds(@RequestParam List<Long> ids) {
+        log.info("菜品的批量删除{}", ids);
+        dishService.DeleteByIds(ids);
+        return Result.success();
     }
 
 }
