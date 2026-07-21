@@ -29,6 +29,7 @@
     </select>
 
 
+
     <delete id="DeleteByIds">
         delete from dish where id in
         <foreach collection="ids" item="id" separator="," open="(" close=")">
@@ -50,5 +51,19 @@
         </set>
         where id =#{id}
     </update>
+
+
+    <select id="list" resultType="com.sky.entity.Dish">
+        SELECT * from dish
+        <where>
+
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+    </select>
 
 </mapper>

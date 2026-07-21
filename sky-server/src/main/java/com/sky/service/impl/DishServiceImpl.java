@@ -3,6 +3,7 @@ package com.sky.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
+import com.sky.constant.StatusConstant;
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PutMapping;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -113,6 +115,7 @@ public class DishServiceImpl implements DishService {
      * @param id
      * @return
      */
+    @Transactional
     public DishVO SelectByIdWithFlavor(Long id) {
         //先查询dish表
         Dish dish = dishMapper.SelectById(id);
@@ -128,6 +131,7 @@ public class DishServiceImpl implements DishService {
 
         return dishVO;
     }
+
 
     /**
      * 修改菜品
@@ -162,4 +166,34 @@ public class DishServiceImpl implements DishService {
 
     }
 
+    /**
+     * 根据分类id查询菜品
+     *
+     * @param categoryId
+     * @return
+     */
+    public List<Dish> SelectByCategoryId(Long categoryId) {
+
+        //添加菜品中展示的是起售中的菜品
+        //两个条件,categoryId和status=1
+        Dish dish = Dish.builder()
+                .categoryId(categoryId)
+                .status(StatusConstant.ENABLE)
+                .build();
+        List<Dish> dishes = dishMapper.list(dish);
+        return dishes;
+    }
+
+    /**
+     *起售停售设置
+     * @param status
+     * @param id
+     */
+    public void StartOrStop(Integer status, Long id) {
+        Dish dish =Dish.builder()
+                .status(status)
+                .id(id)
+                .build();
+        dishMapper.Update(dish);
+    }
 }

@@ -2,6 +2,7 @@ package com.sky.controller.admin;
 
 import com.sky.dto.DishDTO;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.entity.Dish;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
@@ -72,8 +73,8 @@ public class DishController {
     @GetMapping("/{id}")
     @ApiOperation("根据id查询菜单(回显数据)")
     public Result<DishVO> SelectById(@PathVariable Long id) {
-        log.info("根据id查询菜单(回显数据){}",id);
-        DishVO  dishVO =dishService.SelectByIdWithFlavor(id);
+        log.info("根据id查询菜单(回显数据){}", id);
+        DishVO dishVO = dishService.SelectByIdWithFlavor(id);
         return Result.success(dishVO);
     }
 
@@ -90,6 +91,36 @@ public class DishController {
         dishService.Update(dishDTO);
         return Result.success();
 
+    }
+
+    /**
+     *
+     * 起售停售设置
+     *
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("起售停售设置")
+    public Result StartOrStop(@PathVariable Integer status, Long id) {
+        log.info("起售停售设置:{}{}", status, id);
+        dishService.StartOrStop(status, id);
+        return Result.success();
+    }
+
+    /**
+     * 根据分类id查询菜品
+     *
+     * @param CategoryId
+     * @return
+     */
+    @GetMapping("/list")
+    @ApiOperation("根据分类id查询菜品")
+    public Result<List<Dish>> SelectByCategoryId(Long CategoryId) {
+        log.info("根据分类id查询菜品{}", CategoryId);
+        List<Dish> dishes = dishService.SelectByCategoryId(CategoryId);
+        return Result.success(dishes);
     }
 
 
