@@ -4,6 +4,7 @@
 <mapper namespace="com.sky.mapper.SetmealDishMapper">
 
 
+
     <select id="getSetmealIdsByDishIds" resultType="java.lang.Long">
         select  setmeal_id from setmeal_dish where dish_id in
        <foreach collection="dishIds" item="dishid" separator="," open="(" close=")">
@@ -17,4 +18,11 @@
             (#{sd.setmealId},#{sd.dishId},#{sd.name},#{sd.price},#{sd.copies})
         </foreach>
     </insert>
+
+    <delete id="DeleteBySetmealIds">
+        delete from setmeal_dish where id in
+        <foreach collection="SetmealIds" item="SetmealId" separator="," open="(" close=")">
+            #{SetmealId}
+        </foreach>
+    </delete>
 </mapper>

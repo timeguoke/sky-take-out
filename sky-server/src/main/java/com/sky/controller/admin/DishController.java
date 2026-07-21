@@ -70,6 +70,11 @@ public class DishController {
         return Result.success();
     }
 
+    /**
+     * 根据id查询菜单(回显数据)
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     @ApiOperation("根据id查询菜单(回显数据)")
     public Result<DishVO> SelectById(@PathVariable Long id) {
