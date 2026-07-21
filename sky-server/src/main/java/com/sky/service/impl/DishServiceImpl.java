@@ -14,10 +14,12 @@ import com.sky.mapper.SetmealDishMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -103,7 +105,61 @@ public class DishServiceImpl implements DishService {
         //删除菜品和其对应的口味
         dishMapper.DeleteByIds(ids);
         dishFlavorMapper.DeleteByDishIds(ids);
+    }
 
+    /**
+     * 根据id查找数据
+     *
+     * @param id
+     * @return
+     */
+    public DishVO SelectByIdWithFlavor(Long id) {
+        //先查询dish表
+        Dish dish = dishMapper.SelectById(id);
+        //查询口味表
+        List<DishFlavor> dishFlavor = dishFlavorMapper.SelectByDishId(id);
+
+        DishVO dishVO = new DishVO();
+        //进行数据拷贝
+        BeanUtils.copyProperties(dish, dishVO);
+
+        //将口味数据添加到dishVO中
+        dishVO.setFlavors(dishFlavor);
+
+        return dishVO;
+    }
+
+    /**
+     * 修改菜品
+     *
+     * @param dishDTO
+     */
+    @Transactional
+    public void Update(DishDTO dishDTO) {
+        //修改菜品要修改两部分一个是dish表另一个是口味表
+        //1.修改口菜品表
+        Dish dish = new Dish();
+        BeanUtils.copyProperties(dishDTO, dish);
+
+        dishMapper.Update(dish);
+
+        //修改口味表
+
+        //1.先删除口味
+
+        dishFlavorMapper.DeleteByDishId(dishDTO.getId());
+
+        //2.在添加口味
+        List<DishFlavor> flavors = dishDTO.getFlavors();
+        if (flavors != null && flavors.size() > 0) {
+            //为flavors中的dishId属性赋值
+            flavors.forEach(dishFlavor ->
+                    dishFlavor.setDishId(dishDTO.getId()));
+            //插入n条口味表
+            dishFlavorMapper.insertBatch(flavors);
+
+        }
 
     }
+
 }

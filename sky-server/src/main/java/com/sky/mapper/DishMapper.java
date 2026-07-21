@@ -49,4 +49,8 @@ public interface DishMapper {
      * @param ids
      */
     void DeleteByIds(List<Long> ids);
+
+
+
+    void Update(Dish dish);
 }

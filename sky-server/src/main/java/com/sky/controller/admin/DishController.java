@@ -5,6 +5,7 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.DishService;
+import com.sky.vo.DishVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -67,5 +68,29 @@ public class DishController {
         dishService.DeleteByIds(ids);
         return Result.success();
     }
+
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询菜单(回显数据)")
+    public Result<DishVO> SelectById(@PathVariable Long id) {
+        log.info("根据id查询菜单(回显数据){}",id);
+        DishVO  dishVO =dishService.SelectByIdWithFlavor(id);
+        return Result.success(dishVO);
+    }
+
+    /**
+     * 修改菜品
+     *
+     * @param dishDTO
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("修改菜品")
+    public Result Update(@RequestBody DishDTO dishDTO) {
+        log.info("修改菜品{}", dishDTO);
+        dishService.Update(dishDTO);
+        return Result.success();
+
+    }
+
 
 }
