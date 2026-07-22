@@ -51,7 +51,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 //      生成Swagger文档核心Bean对象，用于配置接口文档全局信息、扫描接口范围
 
     @Bean
-    public Docket docket() {
+    public Docket docket1() {
         log.info("接口文档生成中...");
         Contact contact = new Contact("时间的过客", "项目地址", "邮箱");
 
@@ -70,15 +70,36 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
         // 创建Docket文档配置对象，指定使用Swagger2规范生成文档
         Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                //文档分组
+                .groupName("管理端")
                 // 将上面构建好的文档基础信息绑定到当前文档实例
                 .apiInfo(apiInfo)
                 // 开启接口扫描筛选配置
                 .select()
                 // 指定扫描接口的根包路径，只会解析com.sky.controller下所有Controller接口
-                .apis(RequestHandlerSelectors.basePackage("com.sky.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.admin"))
                 // 路径过滤规则：匹配所有接口路径，不做路径排除
                 .paths(PathSelectors.any())
                 // 完成Docket对象构建
+                .build();
+        return docket;
+    }
+    @Bean
+    public Docket docket2() {
+        log.info("接口文档生成中...");
+        Contact contact = new Contact("时间的过客", "项目地址", "邮箱");
+        ApiInfo apiInfo = new ApiInfoBuilder()
+                .title("苍穹外卖项目接口文档")
+                .contact(contact)
+                .version("2.0")
+                .description("苍穹外卖项目接口文档")
+                .build();
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+                .groupName("用户端")
+                .apiInfo(apiInfo)
+                .select()
+                .apis(RequestHandlerSelectors.basePackage("com.sky.controller.user"))
+                .paths(PathSelectors.any())
                 .build();
         return docket;
     }
