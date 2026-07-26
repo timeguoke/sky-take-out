@@ -16,5 +16,22 @@ sky:
     port: 6379
     database: 10
   wechat:
+    # 微信小程序AppID
     appid: wxe2a94278ae3d3a23
+    # 微信小程序AppSecret
     secret: ab569f9f13fb3012cc745880c0b58702
+    # 微信支付商户号
+    mchid: 1561414331
+    # 商户API证书序列号
+    mchSerialNo: 4B3B3DC35414AD50B1B755BAF8DE9CC7CF407606
+    # 商户私钥文件路径 apiclient_key.pem
+   # privateKeyFilePath: D:\pay\apiclient_key.pem
+    # 微信支付APIv3密钥
+    apiV3Key: CZBK51236435wxpay435434323FFDuv3
+    # 微信支付平台证书文件路径
+   # weChatPayCertFilePath: D:\pay\wechatpay_166D96F876F45C7D07CE98952A96EC980368ACFC.pem
+    #这两个使用时要改成新生成的cpolar公网地址
+    # 支付成功回调通知地址（cpolar公网地址）
+    notifyUrl: https://5398babb.r28.cpolar.top/notify/paySuccess
+    # 退款结果回调通知地址（cpolar公网地址）
+    refundNotifyUrl: https://5398babb.r28.cpolar.top/notify/refundSuccess

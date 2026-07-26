@@ -57,5 +57,21 @@ sky:
     bucket-name: ${sky.alioss.bucket-name}
 
   wechat:
+    # 微信小程序AppID
     appid: ${sky.wechat.appid}
+    # 微信小程序AppSecret
     secret: ${sky.wechat.secret}
+    # 微信支付商户号
+    mchid: ${sky.wechat.mchid}
+    # 商户API证书序列号
+    mchSerialNo: ${sky.wechat.mchSerialNo}
+    # 商户私钥文件路径（apiclient_key.pem）
+    #privateKeyFilePath: ${sky.wechat.privateKeyFilePath}
+    # 微信支付APIv3密钥
+    apiV3Key: ${sky.wechat.apiV3Key}
+    # 微信支付平台证书文件路径（wechatpay_xxx.pem）
+    #weChatPayCertFilePath: ${sky.wechat.weChatPayCertFilePath}
+    # 支付成功回调通知地址（外网公网地址，cpolar地址）
+    notifyUrl: ${sky.wechat.notifyUrl}
+    # 退款结果回调通知地址
+    refundNotifyUrl: ${sky.wechat.refundNotifyUrl}
