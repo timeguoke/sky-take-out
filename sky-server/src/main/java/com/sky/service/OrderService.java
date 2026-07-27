@@ -1,9 +1,9 @@
 package com.sky.service;
 
-import com.sky.dto.OrdersPaymentDTO;
-import com.sky.dto.OrdersSubmitDTO;
+import com.sky.dto.*;
 import com.sky.result.PageResult;
 import com.sky.vo.OrderPaymentVO;
+import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
 import org.springframework.stereotype.Service;
@@ -49,7 +49,7 @@ public interface OrderService {
     OrderVO getOrderDetail(Long id);
 
     /**
-     * 取消订单
+     * 取消订单(用户端)
      * @param id
      */
     void cancelOrder(Long id) throws Exception;
@@ -60,4 +60,54 @@ public interface OrderService {
      * @return
      */
     void repetition(Long id);
+
+    /**
+     * 订单搜索
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    PageResult conditionSearch(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * 各个订单状态数量统计
+     * @return
+     */
+    OrderStatisticsVO statistics();
+
+    /**
+     * 查询订单详情
+     * @param id
+     * @return
+     */
+    OrderVO details(long id);
+
+    /**
+     * 接单(就是修改订单状态)
+     * @param ordersConfirmDTO
+     */
+    void confirm(OrdersConfirmDTO ordersConfirmDTO);
+
+    /**
+     * 拒单
+     * @param ordersRejectionDTO
+     */
+    void rejection(OrdersRejectionDTO ordersRejectionDTO);
+
+    /**
+     * 取消订单(管理端取消订单)(商家)
+     * @param ordersCancelDTO
+     */
+    void cancel(OrdersCancelDTO ordersCancelDTO);
+
+    /**
+     * 派送订单
+     * @param id
+     */
+    void delivery(Long id);
+
+    /**
+     * 完成订单
+     * @param id
+     */
+    void complete(Long id);
 }

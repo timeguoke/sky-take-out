@@ -64,9 +64,16 @@
             <if test="userId!=null">
                 and user_id=#{userId}
             </if>
-            order by order_time desc
-
         </where>
+        order by order_time desc
+    </select>
+<!-- 订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消   -->
+    <select id="statistics" resultType="com.sky.vo.OrderStatisticsVO">
+        SELECT
+            SUM(CASE WHEN status = 2 THEN 1 ELSE 0 END) AS toBeConfirmed,
+            SUM(CASE WHEN status = 3 THEN 1 ELSE 0 END) AS confirmed,
+            SUM(CASE WHEN status = 4 THEN 1 ELSE 0 END) AS deliveryInProgress
+        FROM orders;
     </select>
 
 </mapper>
