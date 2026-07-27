@@ -75,3 +75,7 @@ sky:
     notifyUrl: ${sky.wechat.notifyUrl}
     # 退款结果回调通知地址
     refundNotifyUrl: ${sky.wechat.refundNotifyUrl}
+  shop:
+    address: 辽宁省锦州市太和区天桥街道锦州滨海电子商务产业基地7号楼12层53
+  baidu:
+    ak: UwzBxZjQMwG3aan9hgc2jht2ncdxTwCx
