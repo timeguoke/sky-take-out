@@ -32,6 +32,6 @@ sky:
    # weChatPayCertFilePath: D:\pay\wechatpay_166D96F876F45C7D07CE98952A96EC980368ACFC.pem
     #这两个使用时要改成新生成的cpolar公网地址
     # 支付成功回调通知地址（cpolar公网地址）
-    notifyUrl: https://5398babb.r28.cpolar.top/notify/paySuccess
+    notifyUrl: http://655f31bc.r19.vip.cpolar.cn /notify/paySuccess
     # 退款结果回调通知地址（cpolar公网地址）
-    refundNotifyUrl: https://5398babb.r28.cpolar.top/notify/refundSuccess
+    refundNotifyUrl: http://655f31bc.r19.vip.cpolar.cn /notify/refundSuccess
