@@ -5,6 +5,9 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Map;
+
 @Mapper
 public interface UserMapper {
     /**
@@ -30,4 +33,12 @@ public interface UserMapper {
      */
     @Select("select * from user where id =#{userId} ")
     User getById(Long userId);
+
+    /**
+     * 用户量统计
+     * @param map
+     * @return
+     */
+
+    Integer countByMap(Map map);
 }
