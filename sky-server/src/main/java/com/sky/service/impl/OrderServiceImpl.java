@@ -553,10 +553,10 @@ public class OrderServiceImpl implements OrderService {
     public void complete(Long id) {
         //查询订单状态
         Orders orderDB = orderMapper.getById(id);
-        if (orderDB.getStatus() == Orders.DELIVERY_IN_PROGRESS) {
+        if (!orderDB.getStatus().equals(Orders.DELIVERY_IN_PROGRESS)) {
             throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
         }
-        //进行派送
+        //进行完成
         Orders orders = Orders.builder()
                 .id(id)
                 .status(Orders.COMPLETED)
@@ -643,10 +643,10 @@ public class OrderServiceImpl implements OrderService {
             throw new OrderBusinessException(MessageConstant.ORDER_NOT_FOUND);
         }
 
-        Map map =new HashMap<>();
-        map.put("type",2);
-        map.put("orderId",id);
-        map.put("content","订单号"+orderDB.getNumber());
+        Map map = new HashMap<>();
+        map.put("type", 2);
+        map.put("orderId", id);
+        map.put("content", "订单号" + orderDB.getNumber());
 
         String json = JSON.toJSONString(map);
         //通过websocket想浏览器发送催单消息

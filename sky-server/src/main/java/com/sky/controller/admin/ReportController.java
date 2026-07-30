@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -99,6 +100,18 @@ public class ReportController {
         log.info("查询销量排名top10:{},{}", begin, end);
         SalesTop10ReportVO top10 = reportService.getTop10(begin, end);
         return Result.success(top10);
+
+    }
+
+    /**
+     * 导出Excel表格接
+     * @param response
+     */
+    @GetMapping("/export")
+    @ApiOperation("导出Excel表格接口")
+    public void export(HttpServletResponse response){
+        log.info("导出Excel表格接口");
+        reportService.exportBusinessData(response);
 
     }
 

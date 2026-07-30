@@ -76,6 +76,7 @@ public class OrderController {
 
     /**
      * 拒单
+     *
      * @return
      */
     @PutMapping("/rejection")
@@ -89,6 +90,7 @@ public class OrderController {
 
     /**
      * 取消订单
+     *
      * @return
      */
     @PutMapping("/cancel")
@@ -102,6 +104,7 @@ public class OrderController {
 
     /**
      * 派送订单
+     *
      * @return
      */
     @PutMapping("delivery/{id}")
@@ -112,16 +115,21 @@ public class OrderController {
         return Result.success();
     }
 
+    /**
+     * 完成订单
+     *
+     * @param id
+     * @return
+     */
 
     @PutMapping("/complete/{id}")
     @ApiOperation("完成订单")
-    public Result complete(@PathVariable Long id){
+    public Result complete(@PathVariable Long id) {
         log.info("完成订单");
         orderService.complete(id);
         return Result.success();
 
     }
-
 
 
 }
